@@ -37,5 +37,5 @@
 *.filters
 *.user
 
-/64
+/x64
 /.vs
