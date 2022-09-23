@@ -36,3 +36,6 @@
 *.vsxproj
 *.filters
 *.user
+
+/64
+/.vs
