@@ -33,7 +33,7 @@
 
 # More
 *.sln
-*.vsxproj
+*.vcxproj
 *.filters
 *.user
 
