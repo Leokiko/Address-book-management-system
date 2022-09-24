@@ -1,6 +1,9 @@
 #include<iostream>
 #include<stdio.h>
+#include<string>
 using namespace std;
+#define MAX 1000
+
 //菜单界面
 void showMenu() {
 	cout << "*************************" << endl;
@@ -13,23 +16,69 @@ void showMenu() {
 	cout << "***   0、退出系统     ***" << endl;
 	cout << "*************************" << endl;
 }
+
 //添加联系人
-void add() {}
+void add() {
+	int age;
+	string name, tel, add;
+	bool sex;
+	cout << "请输入姓名" << endl;
+	cin >> name;
+	cout << "请输入性别" << endl;
+	cin >> sex;
+	cout << "请输入年龄" << endl;
+	cin >> age;
+	cout << "请输入电话" << endl;
+	cin >> tel;
+	cout << "请输入住址" << endl;
+	cin >> add;
+}
+
 //显示联系人
 void show() {}
+
 //删除联系人
 void del() {}
+
 //查找联系人
 void seach() {}
+
 //修改联系人
 void change() {}
+
 //清空联系人
 void empty() {}
+
 //退出系统
 void exit() {}
+
 int main() {
+
+	//联系人结构体设计，包括姓名、性别、年龄、电话、住址
+	struct Mem
+	{
+		string name;
+		bool sex;
+		int age;
+		string tel;
+		string add;
+	};
+
+	//通讯录结构体设计，包括保存的联系人结构体、记录个数
+	struct Book
+	{
+		struct Mem arr[MAX];
+		int size;
+	};
+
+	//初始化通讯录
+	//Book db;
+	//db.size = 0;
+
+	//显示欢迎菜单
 	showMenu();
 
+	//用户输入选择编号选择功能
 	int select = 1;
 	while (scanf_s("%d", &select) != 0)
 	{
