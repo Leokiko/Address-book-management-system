@@ -52,7 +52,7 @@ void empty() {}
 //退出系统
 void exit() {}
 
-int main() {
+int mainn() {
 
 	//联系人结构体设计，包括姓名、性别、年龄、电话、住址
 	struct Mem
