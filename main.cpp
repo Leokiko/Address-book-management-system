@@ -9,7 +9,7 @@ struct Mem
 {
 	string name;
 	string sex;
-	int age;
+	string age;
 	string tel;
 	string add;
 };
@@ -82,15 +82,16 @@ void add(Book* a) {
 }
 
 //显示所有联系人
-void show(Book a) {
-	if (che(a.size))return;
-	for (int i = 0; i < a.size; i++)
+void show(const Book* a) {
+	if (che(a->size))
+		return;
+	for (int i = 0; i < (a->size); i++)
 	{
-		cout << "姓名：" << a.arr[i].name << "\t";
-		cout << "性别：" << a.arr[i].sex << "\t";
-		cout << "年龄：" << a.arr[i].age << "\t";
-		cout << "电话：" << a.arr[i].tel << "\t";
-		cout << "地址：" << a.arr[i].add << endl;
+		cout << "姓名：" << a->arr[i].name << "\t";
+		cout << "性别：" << a->arr[i].sex << "\t";
+		cout << "年龄：" << a->arr[i].age << "\t";
+		cout << "电话：" << a->arr[i].tel << "\t";
+		cout << "地址：" << a->arr[i].add << endl;
 	}
 	cout << "联系人显示完毕，请继续输入功能编号使用系统" << endl;
 }
@@ -109,13 +110,14 @@ int exist(Book s, string name) {
 }
 //删除联系人
 void del(Book* a) {
-	if (che(a->size))return;
+	if (che(a->size))
+		return;
 	cout << "请输入要删除联系人的姓名" << endl;
 	string name;
 	cin >> name;
 	int loc;
 	loc = exist(*a, name);
-	if (loc)
+	if (loc != -1)
 	{
 		//数组删除需要顺序前移
 		for (int i = loc; i < a->size; i++)
@@ -134,13 +136,95 @@ void del(Book* a) {
 }
 
 //查找联系人
-void seach() {}
+void seach(const Book* a) {
+	if (che(a->size))
+		return;
+	cout << "请输入要查找联系人的姓名" << endl;
+	string name;
+	cin >> name;
+	int loc;
+	loc = exist(*a, name);
+	if (loc != -1)
+	{
+		cout << "姓名：" << a->arr[loc - 1].name << "\t";
+		cout << "性别：" << a->arr[loc - 1].sex << "\t";
+		cout << "年龄：" << a->arr[loc - 1].age << "\t";
+		cout << "电话：" << a->arr[loc - 1].tel << "\t";
+		cout << "地址：" << a->arr[loc - 1].add << endl;
+
+		cls();
+		return;
+	}
+	else {
+		cout << "查无此人，正在返回主菜单，请使用显示联系人功能确定要查找联系人姓名" << endl;
+	}
+	cls();
+}
 
 //修改联系人
-void change() {}
+void change(Book* a) {
+	if (che(a->size))
+		return;
+	cout << "请输入要修改联系人的姓名" << endl;
+	string name;
+	cin >> name;
+	int loc;
+	loc = exist(*a, name);
+	if (loc != -1)
+	{
+		string fun;
+		cout << "请输入需要修改的信息类型" << endl;
+		cin >> fun;
+		int funNum;
+		if (fun == "姓名")funNum = 0;
+		else if (fun == "性别")funNum = 1;
+		else if (fun == "年龄")funNum = 2;
+		else if (fun == "电话")funNum = 3;
+		else if (fun == "地址")funNum = 4;
+		else {
+			cout << "输入的信息非法,正在返回主菜单" << endl;
+			cls();
+			return;
+		}
+		cout << "请输入修改值" << endl;
+		string info;
+		cin >> info;
+		switch (funNum)
+		{
+		case 0:a->arr[loc - 1].name = info; break;
+		case 1:a->arr[loc - 1].sex = info; break;
+		case 2:a->arr[loc - 1].age = info; break;
+		case 3:a->arr[loc - 1].tel = info; break;
+		case 4:a->arr[loc - 1].add = info; break;
+		}
+		cout << "修改成功" << endl;
+		cls();
+		return;
+	}
+	else {
+		cout << "查无此人，正在返回主菜单，请使用显示联系人功能确定要修改联系人姓名" << endl;
+	}
+	cls();
+}
 
 //清空联系人
-void empty() {}
+//清空通讯录，并不需要删除arr
+//而是可以像文件删除一样，删除其引用即可
+void empty(Book* a) {
+	cout << "确认清空通讯录吗请输入“确认”，进行确认" << endl;
+	string check;
+	cin >> check;
+	if (check == "确认") {
+		a->size = 0;
+		cout << "清空成功，正在返回主菜单" << endl;
+		cls();
+		return;
+	}
+	else {
+		cout << "未清空成功，正在返回主菜单" << endl;
+		cls();
+	}
+}
 
 //退出系统
 void exit() {
@@ -168,15 +252,15 @@ int main() {
 			return 0;
 		case 1:add(&db);
 			break;
-		case 2:show(db);
+		case 2:show(&db);
 			break;
 		case 3:del(&db);
 			break;
-		case 4:seach();
+		case 4:seach(&db);
 			break;
-		case 5:change();
+		case 5:change(&db);
 			break;
-		case 6:empty();
+		case 6:empty(&db);
 			break;
 		default:cout << "请输入正确的功能编号！" << endl;
 			break;
